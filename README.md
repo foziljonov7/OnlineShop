@@ -13,12 +13,10 @@ Loyihani clone qilib olgach:
 
 
 ## 2. Powershell da ushbu buyruqlarni amalga oshiring
-```
 dotnet restore
 dotnet test
 dotnet build
 dotnet ef database update
-```
 
 ## 3. Loyihani ishga tushuring.
 
