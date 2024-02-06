@@ -14,29 +14,31 @@ Loyihani clone qilib olgach:
 
 
 ## 2. Powershell da ushbu buyruqlarni amalga oshiring
-```
-dotnet restore
-```
 
 - loyihadagi package larni qayta ishga tushuradi
 
 ```
-dotnet test
+dotnet restore
 ```
 
 - loyihadagi xato va kamchiliklarni tekshiradi
 
 ```
-dotnet build
+dotnet test
 ```
 
 - loyiha ishga tushurib beradi
 
 ```
-dotnet ef database update
+dotnet build
 ```
 
 - database qayta amalga oshiradi
+
+```
+dotnet ef database update
+```
+
 
 ## 3. Loyihani ishga tushuring.
 
