@@ -40,7 +40,7 @@ dotnet ef database update
 ```
 
 
-## 3. Loyihani ishga tushuring.
+-  Loyihani ishga tushuring.
 
 ```
 dotnet run
