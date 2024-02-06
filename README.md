@@ -33,7 +33,7 @@ dotnet test
 dotnet build
 ```
 
-- database qayta amalga oshiradi
+- database update ni amalga oshiradi
 
 ```
 dotnet ef database update
@@ -41,6 +41,10 @@ dotnet ef database update
 
 
 ## 3. Loyihani ishga tushuring.
+
+```
+dotnet run
+```
 
 
 ### [foziljonov7/OnlineShop](https://github.com/foziljonov7/OnlineShop)
