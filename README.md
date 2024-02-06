@@ -1,6 +1,6 @@
 # OnlineShop.Api
 
-## OnlineShop clone qilib olish uchun [foziljonov7/OnlineShop](https://github.com/foziljonov7/OnlineShop.git) dan foydalaning.
+### OnlineShop clone qilib olish uchun [foziljonov7/OnlineShop](https://github.com/foziljonov7/OnlineShop.git) dan foydalaning.
 
 Loyihani clone qilib olgach:
 
