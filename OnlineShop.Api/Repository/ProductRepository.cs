@@ -1,4 +1,5 @@
-﻿using OnlineShop.Api.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Api.Data;
 using OnlineShop.Api.Dtos.ProductDtos;
 using OnlineShop.Api.Models.ProductModels;
 
@@ -40,9 +41,16 @@ namespace OnlineShop.Api.Repository
             throw new NotImplementedException();
         }
 
-        public Task<List<Product>> GetProductsWithImagesAsync()
+        public async Task<List<Product>> GetProductsWithImagesAsync()
         {
-            throw new NotImplementedException();
+            var productWithImages = await dbContext.Products
+                .Include(p => p.Images)
+                .ToListAsync();
+
+            if (productWithImages is null)
+                return null;
+
+            return productWithImages;
         }
 
         public Task<(double totalPrice, int quantity)> SalesProductAsync(Guid id, int quantity)
