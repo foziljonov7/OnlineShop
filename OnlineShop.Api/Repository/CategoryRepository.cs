@@ -1,4 +1,5 @@
-﻿using OnlineShop.Api.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineShop.Api.Data;
 using OnlineShop.Api.Models.ProductModels;
 
 namespace OnlineShop.Api.Repository
@@ -9,24 +10,40 @@ namespace OnlineShop.Api.Repository
 
         public CategoryRepository(AppDbContext dbContext)
             => this.dbContext = dbContext;
-        public Task<Category> CreateCategoryAsync(string name)
+        public async Task<Category> CreateCategoryAsync(string name)
         {
-            throw new NotImplementedException();
+            var category = new Category
+            {
+                Id = new Random().Next(1, 200),
+                Name = name
+            };
+
+            await dbContext.Categories.AddAsync(category);
+            await dbContext.SaveChangesAsync();
+            return category;
         }
 
-        public Task<bool> DeleteCategoryAsync(int id)
+        public async Task<bool> DeleteCategoryAsync(int id)
         {
-            throw new NotImplementedException();
+            var category = await GetCategoryAsync(id);
+
+            dbContext.Categories.Remove(category);
+            await dbContext.SaveChangesAsync();
+            return true;
         }
 
-        public Task<List<Category>> GetCategoriesAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<List<Category>> GetCategoriesAsync()
+            => await dbContext.Categories.ToListAsync();
 
-        public Task<Category> GetCategoryAsync(int id)
+        public async Task<Category> GetCategoryAsync(int id)
         {
-            throw new NotImplementedException();
+            var category = await dbContext.Categories
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (category is null)
+                return null;
+
+            return category;
         }
     }
 }

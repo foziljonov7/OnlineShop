@@ -1,11 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Api.Models.ProductModels;
+using OnlineShop.Api.Models.Sold;
 
 namespace OnlineShop.Api.Data
 {
     public class AppDbContext : DbContext
     {
         public DbSet<Product> Products { get; set; }
+        public DbSet<SoldProduct> Solds { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Image> Images { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options)

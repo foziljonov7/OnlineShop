@@ -10,6 +10,5 @@ namespace OnlineShop.Api.Dtos.ProductDtos
         public string Description { get; set; }
         public int Quantity { get; set; }
         public int CategoryId { get; set; }
-        public List<ImageDto> Images { get; set; }
     }
 }
