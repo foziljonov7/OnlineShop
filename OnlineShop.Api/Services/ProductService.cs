@@ -19,52 +19,58 @@ namespace OnlineShop.Api.Services
             this.repository = repository;
             this.mapper = mapper;
         }
-        public Task<ProductViewModel> CreateProductAsync(CreateProductDto newProduct)
+        public async Task<ProductViewModel> CreateProductAsync(CreateProductDto newProduct)
         {
-            throw new NotImplementedException();
+            var product = await repository.CreateProductAsync(newProduct);
+            return (ProductViewModel)product;
         }
 
-        public Task<bool> DeleteProductAsync(Guid id)
+        public async Task<bool> DeleteProductAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var product = await repository.DeleteProductAsync(id);
+            return product;
         }
 
-        public Task<ProductViewModel> GetProductAsync(Guid id)
+        public async Task<ProductViewModel> GetProductAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var product = await repository.GetProductAsync(id);
+            return (ProductViewModel)product;
         }
 
         public async Task<List<ProductViewModel>> GetProductsAsync()
         {
             var products = await repository.GetProductsAsync();
-
-            var productViewModels = mapper.Map<List<Product>, List<ProductViewModel>>(products);
-            return productViewModels;
+            return mapper.Map<List<Product>, List<ProductViewModel>>(products);
         }
 
-        public Task<List<ProductViewModel>> GetProductsByCategoryAsync(int categoryId)
+        public async Task<List<ProductViewModel>> GetProductsByCategoryAsync(int categoryId)
         {
-            throw new NotImplementedException();
+            var products = await repository.GetProductsByCategoryAsync(categoryId);
+            return mapper.Map<List<Product>, List<ProductViewModel>>(products);
         }
 
-        public Task<List<ProductViewModel>> GetProductsByPriceRangeAsync(double minPrice, double maxPrice)
+        public async Task<List<ProductViewModel>> GetProductsByPriceRangeAsync(double minPrice, double maxPrice)
         {
-            throw new NotImplementedException();
+            var products = await repository.GetProductsByPriceRangeAsync(minPrice, maxPrice); 
+            return mapper.Map<List<Product>, List<ProductViewModel>>(products);
         }
 
-        public Task<List<ProductViewModel>> GetProductsWithImagesAsync()
+        public async Task<List<ProductViewModel>> GetProductsWithImagesAsync()
         {
-            throw new NotImplementedException();
+            var products = await repository.GetProductsWithImagesAsync();
+            return mapper.Map<List<Product>, List<ProductViewModel>>(products);
         }
 
-        public Task<(double totalPrice, int quantity)> SalesProductAsync(Guid id, int quantity)
+        public async Task<(double totalPrice, int quantity)> SalesProductAsync(Guid id, int quantity)
         {
-            throw new NotImplementedException();
+            var product = await repository.SalesProductAsync(id, quantity);
+            return product;
         }
 
-        public Task<ProductViewModel> UpdateProductAsync(Guid id, UpdateProductDto product)
+        public async Task<ProductViewModel> UpdateProductAsync(Guid id, UpdateProductDto product)
         {
-            throw new NotImplementedException();
+            var updateProduct = await repository.UpdateProductAsync(id, product);
+            return (ProductViewModel)updateProduct;
         }
     }
 }
