@@ -1,6 +1,6 @@
 ﻿namespace OnlineShop.Api.Services
 {
-    public class SoldProductService
+    public class SoldProductService : ISoldProductService
     {
     }
 }

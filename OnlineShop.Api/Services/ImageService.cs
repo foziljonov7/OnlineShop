@@ -1,6 +1,6 @@
 ﻿namespace OnlineShop.Api.Services
 {
-    public class ImageService
+    public class ImageService : IImageService
     {
     }
 }

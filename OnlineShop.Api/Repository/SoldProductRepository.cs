@@ -1,6 +1,6 @@
 ﻿namespace OnlineShop.Api.Repository
 {
-    public class SoldProductRepository
+    public class SoldProductRepository : ISoldProductRepository
     {
     }
 }
