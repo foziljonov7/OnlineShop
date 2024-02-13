@@ -8,41 +8,41 @@ namespace OnlineShop.Api.Services
 {
     public class ImageService : IImageService
     {
-        private readonly IImageRepository service;
+        private readonly IImageRepository repository;
         private readonly IMapper mapper;
 
         public ImageService(
             IImageRepository service,
             IMapper mapper)
         {
-            this.service = service;
+            this.repository = service;
             this.mapper = mapper;
         }
        
         public async Task<bool> DeleteImageAsync(Guid id)
-            => await service.DeleteImageAsync(id);
+            => await repository.DeleteImageAsync(id);
 
         public async Task<ImageViewModel> GetImageAsync(Guid id)
         {
-            var image = await service.GetImageAsync(id);
+            var image = await repository.GetImageAsync(id);
             return (ImageViewModel)image;
         }
 
         public async Task<List<ImageViewModel>> GetImageProductIdAsync(Guid productId)
         {
-            var images = await service.GetImageProductIdAsync(productId);
+            var images = await repository.GetImageProductIdAsync(productId);
             return mapper.Map<List<Image>, List<ImageViewModel>>(images);
         }
         
         public async Task<List<ImageViewModel>> GetProductImageAsync(Guid productId)
         {
-            var images = await service.GetProductImageAsync(productId);
+            var images = await repository.GetProductImageAsync(productId);
             return mapper.Map<List<Image>, List<ImageViewModel>>(images);
         }
 
         public async Task<ImageViewModel> SaveImageAsync(CreateImageDto newImage)
         {
-            var image = await service.SaveImageAsync(newImage);
+            var image = await repository.SaveImageAsync(newImage);
             return (ImageViewModel)image;
         }
     }
