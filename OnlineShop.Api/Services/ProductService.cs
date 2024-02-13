@@ -3,7 +3,6 @@ using OnlineShop.Api.Dtos.ProductDtos;
 using OnlineShop.Api.Models.ProductModels;
 using OnlineShop.Api.Repository;
 using OnlineShop.Api.ViewModels;
-using System.Reflection.Metadata.Ecma335;
 
 namespace OnlineShop.Api.Services
 {

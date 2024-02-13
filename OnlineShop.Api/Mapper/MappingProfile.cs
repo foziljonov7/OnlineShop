@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using OnlineShop.Api.Dtos.ImageDtos;
 using OnlineShop.Api.Dtos.ProductDtos;
 using OnlineShop.Api.Models.ProductModels;
 using OnlineShop.Api.Services;
@@ -11,8 +12,8 @@ namespace OnlineShop.Api.Mapper
         public MappingProfile()
         {
             CreateMap<Product, ProductViewModel>();
-            CreateMap<CreateProductDto, Product>();
-            CreateMap<UpdateProductDto, Product>();
+            CreateMap<Image, ImageViewModel>();
+            CreateMap<Category, CategoryViewModel>();
         }
     }
 }

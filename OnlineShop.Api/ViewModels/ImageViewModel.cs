@@ -10,6 +10,7 @@ namespace OnlineShop.Api.ViewModels
         public string FilePath { get; set; }
         public DateTime Created { get; set; }
         public Guid ProductId { get; set; }
+        public ProductViewModel Product { get; set; }
         public static explicit operator ImageViewModel(Image image)
         {
             return new ImageViewModel
@@ -18,7 +19,8 @@ namespace OnlineShop.Api.ViewModels
                 FileName = image.FileName,
                 FilePath = image.FilePath,
                 Created = image.Created,
-                ProductId = image.ProductId
+                ProductId = image.ProductId,
+                Product = (ProductViewModel)image.Product
             };
         }
     }
