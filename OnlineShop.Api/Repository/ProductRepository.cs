@@ -29,7 +29,10 @@ namespace OnlineShop.Api.Repository
 
             await dbContext.Products.AddAsync(product);
             await dbContext.SaveChangesAsync();
-            return product;
+
+            var createProduct = await GetProductAsync(product.Id);
+
+            return createProduct;
         }
 
         public async Task<bool> DeleteProductAsync(Guid id)
@@ -44,7 +47,9 @@ namespace OnlineShop.Api.Repository
         public async Task<Product> GetProductAsync(Guid id)
         {
             var product = await dbContext.Products
-                .FirstOrDefaultAsync(p => p.Id == id);
+                .Where(p => p.Id == id)
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync();
 
             if (product is null)
                 return null;
@@ -137,7 +142,10 @@ namespace OnlineShop.Api.Repository
             updateProduct.CategoryId = product.CategoryId;
 
             await dbContext.SaveChangesAsync();
-            return updateProduct;
+
+            var result = await GetProductAsync(updateProduct.Id);
+
+            return result;
         }
     }
 }

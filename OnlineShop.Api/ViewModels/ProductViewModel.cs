@@ -19,6 +19,9 @@ namespace OnlineShop.Api.ViewModels
 
         public static explicit operator ProductViewModel(Product product)
         {
+            if (product is null)
+                return null;
+
             return new ProductViewModel
             {
                 Id = product.Id,
@@ -29,7 +32,7 @@ namespace OnlineShop.Api.ViewModels
                 Updated = product.Updated,
                 Quantity = product.Quantity,
                 Category = (CategoryViewModel)product.Category,
-                Images = product.Images.ToList(),
+                Images = product.Images != null ? product.Images.ToList() : null,
                 Status = product.Status
             };
         }

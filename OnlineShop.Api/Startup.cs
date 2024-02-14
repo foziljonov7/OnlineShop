@@ -24,6 +24,7 @@ namespace OnlineShop.Api
             // Configure repositories and services
             services.ConfigureRepository();
             services.ConfigureServices();
+            services.ConfigureValidator();
 
             // Add AutoMapper
             services.AddAutoMapper(typeof(Startup));

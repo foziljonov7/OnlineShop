@@ -14,7 +14,6 @@ namespace OnlineShop.Api.Repository
         {
             var category = new Category
             {
-                Id = new Random().Next(1, 200),
                 Name = name
             };
 
