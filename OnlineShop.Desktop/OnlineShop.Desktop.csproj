@@ -8,8 +8,4 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="devexpress.wpf.controls" Version="23.2.3" />
-  </ItemGroup>
-
 </Project>
