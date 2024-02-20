@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using OnlineShop.Desktop.UserControls;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -23,5 +24,17 @@ namespace OnlineShop.Desktop
 
         private void Exitbtn_Click(object sender, RoutedEventArgs e)
             => this.Close();
+
+        private void AddUserControl(UserControl userControl)
+        {
+            MenuGrid.Children.Clear();
+            MenuGrid.Children.Add(userControl);
+        }
+
+        private void MainBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainUserControl userControl = new MainUserControl();
+            AddUserControl(userControl);
+        }
     }
 }
