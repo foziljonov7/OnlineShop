@@ -1,11 +1,12 @@
 ﻿using OnlineShop.Api.Models.Sold;
+using OnlineShop.Api.ViewModels;
 
 namespace OnlineShop.Api.Services
 {
     public interface ISoldProductService
     {
-        Task<List<SoldProduct>> GetSoldProducts();
-        Task<SoldProduct> GetSoldProduct(Guid id);
-        Task<(Guid id, Guid productId, double totalPrice)> GetReturnSoldProduct(Guid id);
+        Task<List<SoldProductViewModel>> GetSoldProducts();
+        Task<SoldProductViewModel> GetSoldProduct(Guid id);
+        Task<(Guid productId, int quantity)> GetReturnSoldProduct(Guid id, int quantity);
     }
 }

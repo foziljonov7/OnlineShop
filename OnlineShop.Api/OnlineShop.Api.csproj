@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Folder Include="Validator\CategoryValidators\" />
+    <Folder Include="Validator\SolsValidators\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
