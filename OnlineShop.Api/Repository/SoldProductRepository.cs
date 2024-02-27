@@ -16,6 +16,7 @@ namespace OnlineShop.Api.Repository
             this.dbContext = dbContext;
             this.repository = repository;
         }
+
         public async Task<(Guid productId, int quantity)> GetReturnSoldProduct(Guid id, int quantity)
         {
             var soldProduct = await dbContext.Solds
@@ -51,6 +52,8 @@ namespace OnlineShop.Api.Repository
         }
 
         public async Task<List<SoldProduct>> GetSoldProducts()
-            => await dbContext.Solds.ToListAsync();
+            => await dbContext.Solds
+                .Where(s => s.Quantity != 0)
+                .ToListAsync();
     }
 }
