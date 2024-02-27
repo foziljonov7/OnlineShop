@@ -21,21 +21,21 @@ namespace OnlineShop.Api.Repository
             var soldProduct = await dbContext.Solds
                 .FirstOrDefaultAsync(s => s.Id == id);
 
-            var product = await repository.GetProductAsync(soldProduct.ProductId);
-
             if (soldProduct is null)
                 throw new ArgumentException("Not found", nameof(id));
 
-            soldProduct.Quantity -= quantity;
+            var product = await repository.GetProductAsync(soldProduct.ProductId);
 
+            if (product is null)
+                throw new Exception("Product not found");
+
+            soldProduct.Quantity -= quantity;
             product.Quantity += quantity;
 
-            soldProduct.Price = 0;
-            soldProduct.TotalPrice = 0;
-            soldProduct.Quantity = 0;
-            soldProduct.ProductId = product.Id;
+            soldProduct.TotalPrice = soldProduct.Price = soldProduct.Quantity;
 
             await dbContext.SaveChangesAsync();
+
             return (productId: product.Id, quantity: quantity);
         }
 

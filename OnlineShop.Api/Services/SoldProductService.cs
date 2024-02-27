@@ -19,11 +19,6 @@ namespace OnlineShop.Api.Services
             this.repository = repository;
             this.mapper = mapper;
         }
-        public async Task<(Guid productId, double totalPrice)> GetReturnSoldProduct(Guid id, int quantity)
-        {
-            var returnSoldProduct = await repository.GetReturnSoldProduct(id, quantity);
-            return returnSoldProduct;
-        }
 
         public async Task<SoldProductViewModel> GetSoldProduct(Guid id)
         {
@@ -37,9 +32,10 @@ namespace OnlineShop.Api.Services
             return mapper.Map<List<SoldProduct>, List<SoldProductViewModel>>(soldProducts);
         }
 
-        Task<(Guid productId, int quantity)> ISoldProductService.GetReturnSoldProduct(Guid id, int quantity)
+        public async Task<(Guid productId, int quantity)> GetReturnSoldProduct(Guid id, int quantity)
         {
-            throw new NotImplementedException();
+            var returnSoldProduct = await repository.GetReturnSoldProduct(id, quantity);
+            return returnSoldProduct;
         }
     }
 }
