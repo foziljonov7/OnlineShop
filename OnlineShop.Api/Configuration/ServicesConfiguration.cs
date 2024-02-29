@@ -16,6 +16,7 @@ namespace OnlineShop.Api.Configuration
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ISoldProductRepository, SoldProductRepository>();
+            services.AddScoped<IUserRepository, AccountRepository>();
         }
 
         // Services configuration
