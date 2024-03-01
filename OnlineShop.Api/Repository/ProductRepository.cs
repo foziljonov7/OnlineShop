@@ -4,6 +4,8 @@ using OnlineShop.Api.Dtos.ImageDtos;
 using OnlineShop.Api.Dtos.ProductDtos;
 using OnlineShop.Api.Models.ProductModels;
 using OnlineShop.Api.Models.Sold;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 using System.Xml;
 using static OnlineShop.Api.Dtos.UserDtos.ServiceResponse;
 
@@ -65,7 +67,6 @@ namespace OnlineShop.Api.Repository
         {
             return await dbContext.Products
                 .Include(c => c.Category)
-                .Include(i => i.Images)
                 .ToListAsync();
         }
 

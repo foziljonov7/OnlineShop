@@ -32,7 +32,7 @@
   <ItemGroup>
     <Folder Include="Validator\CategoryValidators\" />
     <Folder Include="Validator\SolsValidators\" />
-    <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 
 </Project>

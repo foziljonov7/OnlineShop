@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OnlineShop.Api.Data;
 using OnlineShop.Api.Dtos.ImageDtos;
+using OnlineShop.Api.Models.ProductModels;
 using OnlineShop.Api.Services;
 
 namespace OnlineShop.Api.Controllers
@@ -11,11 +13,19 @@ namespace OnlineShop.Api.Controllers
     public class ImageController : ControllerBase
     {
         private readonly IImageService service;
+        private readonly AppDbContext dbContext;
+        private readonly IWebHostEnvironment _env;
 
-        public ImageController(IImageService service)
+        public ImageController(
+            IImageService servicem,
+            AppDbContext dbContext,
+            IWebHostEnvironment env)
         {
             this.service = service;
+            this.dbContext = dbContext;
+            this._env = env;
         }
+
         [HttpGet("Image/{id}")]
         public async Task<IActionResult> GetImagesAsync([FromRoute] Guid id)
             => Ok(await service.GetImageAsync(id));

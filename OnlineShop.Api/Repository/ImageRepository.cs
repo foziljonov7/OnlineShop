@@ -13,7 +13,7 @@ namespace OnlineShop.Api.Repository
         public ImageRepository(AppDbContext dbContext)
             => this.dbContext = dbContext;
         public async Task<bool> DeleteImageAsync(Guid id)
-        {
+        {  
             var image = await GetImageAsync(id);
 
             dbContext.Images.Remove(image);
@@ -62,7 +62,7 @@ namespace OnlineShop.Api.Repository
         {
             var uniqueName = $"{Guid.NewGuid()}-{newImage.FileName}";
 
-            var imagePath = Path.Combine("wwwroot", "images", uniqueName);
+            var imagePath = Path.Combine("wwwroot", "Images", uniqueName);
 
             using(var fileStream = new FileStream(imagePath, FileMode.Create))
             {
