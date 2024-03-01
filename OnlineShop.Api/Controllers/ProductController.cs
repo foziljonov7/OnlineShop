@@ -42,7 +42,7 @@ namespace OnlineShop.Api.Controllers
             var validationResult = await createValidator.ValidateAsync(newProduct);
 
             if (!validationResult.IsValid)
-                return BadRequest(validationResult.Errors);
+                return Ok(validationResult.Errors);
 
             var request = await service.CreateProductAsync(newProduct);
             return Ok(request);

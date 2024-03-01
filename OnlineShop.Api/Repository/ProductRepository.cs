@@ -5,6 +5,7 @@ using OnlineShop.Api.Dtos.ProductDtos;
 using OnlineShop.Api.Models.ProductModels;
 using OnlineShop.Api.Models.Sold;
 using System.Xml;
+using static OnlineShop.Api.Dtos.UserDtos.ServiceResponse;
 
 namespace OnlineShop.Api.Repository
 {
@@ -14,7 +15,7 @@ namespace OnlineShop.Api.Repository
 
         public ProductRepository(AppDbContext dbContext)
             => this.dbContext = dbContext;
-        public async Task<Product> CreateProductAsync(CreateProductDto newProduct)
+        public async Task<GeneralResopnse> CreateProductAsync(CreateProductDto newProduct)
         {
             var product = new Product
             {
@@ -27,12 +28,15 @@ namespace OnlineShop.Api.Repository
                 CategoryId = newProduct.CategoryId
             };
 
+            if (product is null)
+                return new GeneralResopnse(false, "Product is null");
+
             await dbContext.Products.AddAsync(product);
             await dbContext.SaveChangesAsync();
 
             var createProduct = await GetProductAsync(product.Id);
 
-            return createProduct;
+            return new GeneralResopnse(true, "Successfully created");
         }
 
         public async Task<bool> DeleteProductAsync(Guid id)
@@ -127,12 +131,12 @@ namespace OnlineShop.Api.Repository
             return (totalPrice, quantity);
         }
 
-        public async Task<Product> UpdateProductAsync(Guid id, UpdateProductDto product)
+        public async Task<GeneralResopnse> UpdateProductAsync(Guid id, UpdateProductDto product)
         {
             var updateProduct = await GetProductAsync(id);
 
             if (product is null)
-                return null;
+                return new GeneralResopnse(false, "Product is null");
 
             updateProduct.Title = product.Title;
             updateProduct.Price = product.Price;
@@ -145,7 +149,7 @@ namespace OnlineShop.Api.Repository
 
             var result = await GetProductAsync(updateProduct.Id);
 
-            return result;
+            return new GeneralResopnse(true, "Successfully updated");
         }
     }
 }

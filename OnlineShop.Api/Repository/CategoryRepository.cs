@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Api.Data;
 using OnlineShop.Api.Models.ProductModels;
+using static OnlineShop.Api.Dtos.UserDtos.ServiceResponse;
 
 namespace OnlineShop.Api.Repository
 {
@@ -10,8 +11,11 @@ namespace OnlineShop.Api.Repository
 
         public CategoryRepository(AppDbContext dbContext)
             => this.dbContext = dbContext;
-        public async Task<Category> CreateCategoryAsync(string name)
+        public async Task<GeneralResopnse> CreateCategoryAsync(string name)
         {
+            if (name is null)
+                return new GeneralResopnse(false, "Name is null");
+
             var category = new Category
             {
                 Name = name
@@ -19,7 +23,7 @@ namespace OnlineShop.Api.Repository
 
             await dbContext.Categories.AddAsync(category);
             await dbContext.SaveChangesAsync();
-            return category;
+            return new GeneralResopnse(true, "Successfully created");
         }
 
         public async Task<bool> DeleteCategoryAsync(int id)

@@ -3,6 +3,7 @@ using OnlineShop.Api.Dtos.ProductDtos;
 using OnlineShop.Api.Models.ProductModels;
 using OnlineShop.Api.Repository;
 using OnlineShop.Api.ViewModels;
+using static OnlineShop.Api.Dtos.UserDtos.ServiceResponse;
 
 namespace OnlineShop.Api.Services
 {
@@ -18,10 +19,10 @@ namespace OnlineShop.Api.Services
             this.repository = repository;
             this.mapper = mapper;
         }
-        public async Task<ProductViewModel> CreateProductAsync(CreateProductDto newProduct)
+        public async Task<GeneralResopnse> CreateProductAsync(CreateProductDto newProduct)
         {
             var product = await repository.CreateProductAsync(newProduct);
-            return (ProductViewModel)product;
+            return product;
         }
 
         public async Task<bool> DeleteProductAsync(Guid id)
@@ -66,10 +67,10 @@ namespace OnlineShop.Api.Services
             return product;
         }
 
-        public async Task<ProductViewModel> UpdateProductAsync(Guid id, UpdateProductDto product)
+        public async Task<GeneralResopnse> UpdateProductAsync(Guid id, UpdateProductDto product)
         {
             var updateProduct = await repository.UpdateProductAsync(id, product);
-            return (ProductViewModel)updateProduct;
+            return updateProduct;
         }
     }
 }

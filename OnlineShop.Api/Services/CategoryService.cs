@@ -2,6 +2,7 @@
 using OnlineShop.Api.Models.ProductModels;
 using OnlineShop.Api.Repository;
 using OnlineShop.Api.ViewModels;
+using static OnlineShop.Api.Dtos.UserDtos.ServiceResponse;
 
 namespace OnlineShop.Api.Services
 {
@@ -17,10 +18,10 @@ namespace OnlineShop.Api.Services
             this.service = service;
             this.mapper = mapper;
         }
-        public async Task<CategoryViewModel> CreateCategoryAsync(string name)
+        public async Task<GeneralResopnse> CreateCategoryAsync(string name)
         {
             var category = await service.CreateCategoryAsync(name);
-            return (CategoryViewModel)category;
+            return category;
         }
 
         public async Task<bool> DeleteCategoryAsync(int id)

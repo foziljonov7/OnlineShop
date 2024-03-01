@@ -1,5 +1,6 @@
 ﻿using OnlineShop.Api.Models.ProductModels;
 using OnlineShop.Api.ViewModels;
+using static OnlineShop.Api.Dtos.UserDtos.ServiceResponse;
 
 namespace OnlineShop.Api.Services
 {
@@ -7,7 +8,7 @@ namespace OnlineShop.Api.Services
     {
         Task<List<CategoryViewModel>> GetCategoriesAsync();
         Task<CategoryViewModel> GetCategoryAsync(int id);
-        Task<CategoryViewModel> CreateCategoryAsync(string name);
+        Task<GeneralResopnse> CreateCategoryAsync(string name);
         Task<bool> DeleteCategoryAsync(int id);
     }
 }
