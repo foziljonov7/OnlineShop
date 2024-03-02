@@ -3,6 +3,8 @@ using OnlineShop.Api.Dtos.ImageDtos;
 using OnlineShop.Api.Models.ProductModels;
 using OnlineShop.Api.Repository;
 using OnlineShop.Api.ViewModels;
+using System.Security.Principal;
+using static OnlineShop.Api.Dtos.UserDtos.ServiceResponse;
 
 namespace OnlineShop.Api.Services
 {
@@ -33,17 +35,17 @@ namespace OnlineShop.Api.Services
             var images = await repository.GetImageProductIdAsync(productId);
             return mapper.Map<List<Image>, List<ImageViewModel>>(images);
         }
-        
+
+        public async Task<List<ImageViewModel>> GetImagesAsync()
+        {
+            var images = await repository.GetImagesAsync();
+            return mapper.Map<List<Image>, List<ImageViewModel>>(images);
+        }
+
         public async Task<List<ImageViewModel>> GetProductImageAsync(Guid productId)
         {
             var images = await repository.GetProductImageAsync(productId);
             return mapper.Map<List<Image>, List<ImageViewModel>>(images);
-        }
-
-        public async Task<ImageViewModel> SaveImageAsync(CreateImageDto newImage)
-        {
-            var image = await repository.SaveImageAsync(newImage);
-            return (ImageViewModel)image;
         }
     }
 }

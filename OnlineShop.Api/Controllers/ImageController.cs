@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Api.Data;
-using OnlineShop.Api.Dtos.ImageDtos;
 using OnlineShop.Api.Models.ProductModels;
 using OnlineShop.Api.Services;
+using static OnlineShop.Api.Dtos.UserDtos.ServiceResponse;
 
 namespace OnlineShop.Api.Controllers
 {
@@ -25,6 +23,9 @@ namespace OnlineShop.Api.Controllers
             this.dbContext = dbContext;
             this._env = env;
         }
+        [HttpGet("Images")]
+        public async Task<IActionResult> GetImagesAsync()
+            => Ok(await service.GetImagesAsync());
 
         [HttpGet("Image/{id}")]
         public async Task<IActionResult> GetImagesAsync([FromRoute] Guid id)
@@ -38,8 +39,31 @@ namespace OnlineShop.Api.Controllers
         public async Task<IActionResult> GetProductImageAsync([FromRoute] Guid productId)
             => Ok(await service.GetProductImageAsync(productId));
 
-        [HttpPost("SaveImage")]
-        public async Task<IActionResult> SaveImageAsync([FromBody] CreateImageDto newImage)
-            => Ok(await service.SaveImageAsync(newImage));
+        [HttpPost("SetImage")]
+        public async Task<GeneralResopnse> SaveImageAsync(Guid productId, IFormFile file)
+        {
+            string fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
+            string path = Path.Combine(_env.WebRootPath, $"Images/{fileName}");
+
+            FileStream fileStream = System.IO.File.Open(path, FileMode.Create);
+            await file.OpenReadStream().CopyToAsync(fileStream);
+
+            fileStream.Flush();
+            fileStream.Close();
+
+            var image = new Image
+            {
+                Id = Guid.NewGuid(),
+                FileName = fileName,
+                FilePath = path,
+                ProductId = productId,
+                Created = DateTime.UtcNow.AddHours(5)
+            };
+
+            await dbContext.Images.AddAsync(image);
+            await dbContext.SaveChangesAsync();
+
+            return new GeneralResopnse(true, "Image successfully saved");
+        }
     }
 }

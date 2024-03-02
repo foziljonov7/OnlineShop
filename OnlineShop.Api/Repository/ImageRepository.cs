@@ -1,17 +1,26 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿    using Microsoft.EntityFrameworkCore;
 using OnlineShop.Api.Data;
 using OnlineShop.Api.Dtos.ImageDtos;
 using OnlineShop.Api.Models.ProductModels;
 using System.Data.Common;
+using System.IO.Pipelines;
+using static OnlineShop.Api.Dtos.UserDtos.ServiceResponse;
 
 namespace OnlineShop.Api.Repository
 {
     public class ImageRepository : IImageRepository
     {
         private readonly AppDbContext dbContext;
+        private readonly IWebHostEnvironment env;
 
-        public ImageRepository(AppDbContext dbContext)
-            => this.dbContext = dbContext;
+        public ImageRepository(
+            AppDbContext dbContext,
+            IWebHostEnvironment env)
+        {
+            this.dbContext = dbContext;
+            this.env = env;
+
+        }
         public async Task<bool> DeleteImageAsync(Guid id)
         {  
             var image = await GetImageAsync(id);
@@ -45,6 +54,11 @@ namespace OnlineShop.Api.Repository
             return productImages;
         }
 
+        public async Task<List<Image>> GetImagesAsync()
+            => await dbContext.Images
+                .Include(i => i.Product)
+                .ToListAsync();
+
         public async Task<List<Image>> GetProductImageAsync(Guid productId)
         {
             var product = await dbContext.Products
@@ -56,32 +70,6 @@ namespace OnlineShop.Api.Repository
                 return null;
 
             return product.Images.ToList();
-        }
-
-        public async Task<Image> SaveImageAsync(CreateImageDto newImage)
-        {
-            var uniqueName = $"{Guid.NewGuid()}-{newImage.FileName}";
-
-            var imagePath = Path.Combine("wwwroot", "Images", uniqueName);
-
-            using(var fileStream = new FileStream(imagePath, FileMode.Create))
-            {
-                await newImage.ImageFile.CopyToAsync(fileStream);
-            }
-
-            var image = new Image
-            {
-                Id = Guid.NewGuid(),
-                FileName = uniqueName,
-                FilePath = imagePath,
-                ProductId = newImage.ProductId,
-                Created = DateTime.UtcNow
-            };
-
-            await dbContext.Images.AddAsync(image);
-            await dbContext.SaveChangesAsync();
-
-            return image;
         }
     }
 }
