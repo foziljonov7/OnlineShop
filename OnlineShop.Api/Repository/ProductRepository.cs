@@ -8,12 +8,14 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Xml;
 using static OnlineShop.Api.Dtos.UserDtos.ServiceResponse;
+using OnlineShop.Api.Models.Status;
 
 namespace OnlineShop.Api.Repository
 {
     public class ProductRepository : IProductRepository
     {
         private readonly AppDbContext dbContext;
+        private TimeSpan difference;
 
         public ProductRepository(AppDbContext dbContext)
             => this.dbContext = dbContext;
@@ -27,7 +29,8 @@ namespace OnlineShop.Api.Repository
                 Created = DateTime.UtcNow.AddHours(5),
                 Description = newProduct.Description,
                 Quantity = newProduct.Quantity,
-                CategoryId = newProduct.CategoryId
+                CategoryId = newProduct.CategoryId,
+                Status = IsPresent.Active
             };
 
             if (product is null)
@@ -60,14 +63,41 @@ namespace OnlineShop.Api.Repository
             if (product is null)
                 return null;
 
+            difference = DateTime.UtcNow - product.Created;
+
+            if (product.Quantity > 0 && difference.TotalDays > 7)
+                product.Status = IsPresent.Active;
+
+            if (product.Quantity == 0)
+                product.Status = IsPresent.OutOfStock;
+
+            if (difference.TotalDays <= 7)
+                product.Status = IsPresent.New;
+
             return product;
         }
 
         public async Task<List<Product>> GetProductsAsync()
         {
-            return await dbContext.Products
+            var products = await dbContext.Products
                 .Include(c => c.Category)
                 .ToListAsync();
+
+            foreach(var product in products)
+            {
+                if (product.Quantity == 0)
+                    product.Status = IsPresent.OutOfStock;
+
+                difference = DateTime.UtcNow - product.Created;
+
+                if(difference.TotalDays <= 7)
+                    product.Status = IsPresent.New;
+
+                if (difference.TotalDays > 7 && product.Quantity > 0)
+                    product.Status = IsPresent.Active;
+            }
+
+            return products;
         }
 
         public async Task<List<Product>> GetProductsByCategoryAsync(int categoryId)

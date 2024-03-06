@@ -56,7 +56,7 @@ namespace OnlineShop.Api.Repository
 
         public async Task<List<Image>> GetImagesAsync()
             => await dbContext.Images
-                .Include(i => i.Product)
+                .Include(i => i.ProductId)
                 .ToListAsync();
 
         public async Task<List<Image>> GetProductImageAsync(Guid productId)

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OnlineShop.Api.Data;
 using OnlineShop.Api.Models.ProductModels;
 using OnlineShop.Api.Services;
@@ -8,6 +9,7 @@ namespace OnlineShop.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ImageController : ControllerBase
     {
         private readonly IImageService service;

@@ -3,6 +3,7 @@
     public enum IsPresent
     {
         Active,
+        New,
         InActive,
         OutOfStock,
         Discontinued
