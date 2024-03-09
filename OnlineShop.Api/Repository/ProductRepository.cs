@@ -66,13 +66,15 @@ namespace OnlineShop.Api.Repository
             difference = DateTime.UtcNow - product.Created;
 
             if (product.Quantity > 0 && difference.TotalDays > 7)
-                product.Status = IsPresent.Active;
+                product.Status = IsPresent.InActive;
 
             if (product.Quantity == 0)
                 product.Status = IsPresent.OutOfStock;
 
             if (difference.TotalDays <= 7)
                 product.Status = IsPresent.New;
+
+            await dbContext.SaveChangesAsync();
 
             return product;
         }
@@ -94,8 +96,10 @@ namespace OnlineShop.Api.Repository
                     product.Status = IsPresent.New;
 
                 if (difference.TotalDays > 7 && product.Quantity > 0)
-                    product.Status = IsPresent.Active;
+                    product.Status = IsPresent.InActive;
             }
+
+            await dbContext.SaveChangesAsync();
 
             return products;
         }

@@ -87,6 +87,7 @@ namespace OnlineShop.Api
             if (env.IsDevelopment())
             {
                 // Enable Swagger
+                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "OnlineShop.Api v1"));
             }
