@@ -84,7 +84,7 @@ namespace OnlineShop.Api
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsProduction())
             {
                 // Enable Swagger
                 app.UseDeveloperExceptionPage();
