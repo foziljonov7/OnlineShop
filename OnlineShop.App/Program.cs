@@ -2,25 +2,21 @@ using OnlineShop.App.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Configuration.AddJsonFile("appsettings.json");
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
 builder.Services.AddHttpClient<IProductHttpClient, ProductHttpClient>(client =>
 {
-    var baseUrl = builder.Configuration.GetValue<string>("ShopApi:BaseUrl");
-    if (!string.IsNullOrEmpty(baseUrl))
-    {
-        client.BaseAddress = new Uri(baseUrl);
-    }
+    var baseUrl = builder.Configuration.GetSection("ShopApi")["BaseUrl"];
+    client.BaseAddress = new Uri(baseUrl);
 });
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 

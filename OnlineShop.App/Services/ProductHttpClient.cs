@@ -1,9 +1,7 @@
 ﻿using OnlineShop.App.Dtos;
-using OnlineShop.App.Helpers;
 using OnlineShop.Domain.Models.ProductModels;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using static OnlineShop.App.Helpers.ServiceResponse;
 
 namespace OnlineShop.App.Services
