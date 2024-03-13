@@ -45,7 +45,7 @@ namespace OnlineShop.App.Services
 
         public async Task<Product> GetProductAsync(Guid id)
         {
-            var httpResponse = await client.GetAsync("api/Product/Product");
+            var httpResponse = await client.GetAsync($"api/Product/Product/{id}");
 
             httpResponse.EnsureSuccessStatusCode();
 
