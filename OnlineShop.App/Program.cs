@@ -7,12 +7,10 @@ builder.Configuration.AddJsonFile("appsettings.json");
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+var baseUrl = builder.Configuration.GetSection("ShopApi")["BaseUrl"];
 
 builder.Services.AddHttpClient<IProductHttpClient, ProductHttpClient>(client =>
-{
-    var baseUrl = builder.Configuration.GetSection("ShopApi")["BaseUrl"];
-    client.BaseAddress = new Uri(baseUrl);
-});
+    client.BaseAddress = new Uri(baseUrl));
 
 if (!app.Environment.IsDevelopment())
 {
