@@ -33,6 +33,18 @@ namespace OnlineShop.Api
                 options.UseNpgsql(Configuration.GetConnectionString("PostgreConnection")
                 ?? throw new InvalidOperationException("UserIdentity connection string is not found")));
 
+            using(var serviceScope = services.BuildServiceProvider().CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+                dbContext.Database.Migrate();
+            }
+
+            using(var serviceScope = services.BuildServiceProvider().CreateScope())
+            {
+                var IdentityDbContext = serviceScope.ServiceProvider.GetRequiredService<UserIdentityDbContext>();
+                IdentityDbContext.Database.Migrate();
+            }
+
             // Add Identity & JWT authentication
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<UserIdentityDbContext>()
