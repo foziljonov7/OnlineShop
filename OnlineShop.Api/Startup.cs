@@ -25,12 +25,12 @@ namespace OnlineShop.Api
         {
             // Add AppDbContext
             services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("localhost")
+                options.UseNpgsql(Configuration.GetConnectionString("PostgreConnection")
                 ?? throw new InvalidOperationException("Connection string is not found")));
 
             // Add UserIdentityDbContext
             services.AddDbContext<UserIdentityDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("localhost")
+                options.UseNpgsql(Configuration.GetConnectionString("PostgreConnection")
                 ?? throw new InvalidOperationException("UserIdentity connection string is not found")));
 
             // Add Identity & JWT authentication
